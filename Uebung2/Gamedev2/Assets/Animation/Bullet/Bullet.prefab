@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5415611192687556563}
   - component: {fileID: 5415611192687556588}
   - component: {fileID: -6297544222702839088}
-  - component: {fileID: 8248840652102171683}
+  - component: {fileID: 5686311994152069797}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -120,11 +120,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   damage: 40
-  timeUntilDestoryed: 0.3
+  timeUntilDestroyed: 0.3
   rb: {fileID: 5415611192687556588}
   impactEffect: {fileID: 3925373638244638503, guid: 26d77f2cb89310b4b8e9e475a903046c, type: 3}
---- !u!68 &8248840652102171683
-EdgeCollider2D:
+--- !u!70 &5686311994152069797
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -136,17 +136,6 @@ EdgeCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.0072671184, y: 0.19390096}
-  - {x: 0.09579353, y: 0.13753736}
-  - {x: 0.15155908, y: 0.06315625}
-  - {x: 0.16438216, y: -0.011968474}
-  - {x: 0.15150744, y: -0.08119958}
-  - {x: 0.09525846, y: -0.15416463}
-  - {x: 0.0060989857, y: -0.19156486}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+  m_Offset: {x: -0.011452988, y: 0}
+  m_Size: {x: 0.37709406, y: 0.40000004}
+  m_Direction: 0

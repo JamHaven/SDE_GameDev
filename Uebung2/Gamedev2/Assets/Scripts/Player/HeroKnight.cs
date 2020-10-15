@@ -8,20 +8,18 @@ public class HeroKnight : MonoBehaviour {
     [SerializeField] float      m_jumpForce = 7.5f;
     [SerializeField] float      m_rollForce = 6.0f;
     [SerializeField] bool       m_noBlood = false;
-    [SerializeField] GameObject m_slideDust;
+    //[SerializeField] GameObject m_slideDust;
 
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;
     private Sensor_HeroKnight   m_groundSensor;
-    private Sensor_HeroKnight   m_wallSensorR1;
-    private Sensor_HeroKnight   m_wallSensorR2;
-    private Sensor_HeroKnight   m_wallSensorL1;
-    private Sensor_HeroKnight   m_wallSensorL2;
+    //private Sensor_HeroKnight   m_wallSensorR1;
+    //private Sensor_HeroKnight   m_wallSensorR2;
+    //private Sensor_HeroKnight   m_wallSensorL1;
+    //private Sensor_HeroKnight   m_wallSensorL2;
     private bool                m_grounded = false;
     private bool                m_rolling = false;
     private Boolean             m_facingDirectionRight = true;
-    private int                 m_currentAttack = 0;
-    private float               m_timeSinceAttack = 0.0f;
     private float               m_delayToIdle = 0.0f;
 
 
@@ -31,17 +29,16 @@ public class HeroKnight : MonoBehaviour {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
+        //m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
+        //m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
+        //m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
+        //m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
     }
 
     // Update is called once per frame
     void Update ()
     {
-        // Increase timer that controls attack combo
-        m_timeSinceAttack += Time.deltaTime;
+        
 
         //Check if character just landed on the ground
         if (!m_grounded && m_groundSensor.State())
@@ -92,10 +89,10 @@ public class HeroKnight : MonoBehaviour {
 
         // -- Handle Animations --
         //Wall Slide
-        m_animator.SetBool("WallSlide", (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State()));
+        //m_animator.SetBool("WallSlide", (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State()));
 
         //Death
-        if (Input.GetKeyDown("e"))
+        /*if (Input.GetKeyDown("e"))
         {
             m_animator.SetBool("noBlood", m_noBlood);
             m_animator.SetTrigger("Death");
@@ -104,39 +101,22 @@ public class HeroKnight : MonoBehaviour {
         //Hurt
         else if (Input.GetKeyDown("q"))
             m_animator.SetTrigger("Hurt");
-
+        */
         //Attack
-        else if(Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f)
-        {
-            m_currentAttack++;
-
-            // Loop back to one after third attack
-            if (m_currentAttack > 3)
-                m_currentAttack = 1;
-
-            // Reset Attack combo if time since last attack is too large
-            if (m_timeSinceAttack > 1.0f)
-                m_currentAttack = 1;
-
-            // Call one of three attack animations "Attack1", "Attack2", "Attack3"
-            m_animator.SetTrigger("Attack" + m_currentAttack);
-
-            // Reset timer
-            m_timeSinceAttack = 0.0f;
-        }
+ 
 
         // Block
-        else if (Input.GetMouseButtonDown(1))
+        /*if (Input.GetMouseButtonDown(1))
         {
             m_animator.SetTrigger("Block");
             m_animator.SetBool("IdleBlock", true);
         }
 
         else if (Input.GetMouseButtonUp(1))
-            m_animator.SetBool("IdleBlock", false);
+            m_animator.SetBool("IdleBlock", false);*/
 
         // Roll
-        else if (Input.GetKeyDown("left shift") && !m_rolling)
+        /*if (Input.GetKeyDown("left shift") && !m_rolling)
         {
             m_rolling = true;
             m_animator.SetTrigger("Roll");
@@ -148,11 +128,11 @@ public class HeroKnight : MonoBehaviour {
             {
                 m_body2d.velocity = new Vector2(-1 * m_rollForce, m_body2d.velocity.y);
             }
-        }
+        }*/
             
 
         //Jump
-        else if (Input.GetKeyDown("space") && m_grounded)
+        if (Input.GetKeyDown("space") && m_grounded)
         {
             m_animator.SetTrigger("Jump");
             m_grounded = false;
@@ -181,13 +161,13 @@ public class HeroKnight : MonoBehaviour {
 
     // Animation Events
     // Called in end of roll animation.
-    void AE_ResetRoll()
+    /*void AE_ResetRoll()
     {
         m_rolling = false;
-    }
+    }*/
 
     // Called in slide animation.
-    void AE_SlideDust()
+    /*void AE_SlideDust()
     {
         Vector3 spawnPosition;
 
@@ -211,7 +191,7 @@ public class HeroKnight : MonoBehaviour {
             }
             
         }
-    }
+    }*/
 
     private void Flip()
     {

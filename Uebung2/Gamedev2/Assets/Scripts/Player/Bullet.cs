@@ -1,41 +1,43 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace Player
 {
-    public float speed = 20f;
-    public int damage = 40;
-    public float timeUntilDestoryed = 2f;
-    private float timeAlive = 0f;
-    public Rigidbody2D rb;
-    public GameObject impactEffect;
+    public class Bullet : MonoBehaviour
+    {
+        public float speed = 20f;
+        public int damage = 40;
+        public float timeUntilDestroyed = 0.2f;
+        private float m_timeAlive = 0f;
+        public Rigidbody2D rb;
+        public GameObject impactEffect;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb.velocity = transform.right * speed;
-    }
-
-    private void OnTriggerEnter2D(Collider2D hitInfo)
-    {
-        Enemy enemy = hitInfo.GetComponent<Enemy>();
-        if (enemy != null)
+        // Start is called before the first frame update
+        void Start()
         {
-            enemy.TakeDamage(damage);
+            rb.velocity = transform.right * speed;
         }
 
-        Instantiate(impactEffect, transform.position, transform.rotation);
-        Destroy(gameObject);
-    }
-
-    private void Update()
-    {
-        timeAlive += Time.deltaTime;
-        if (timeAlive >= timeUntilDestoryed)
+        private void OnTriggerEnter2D(Collider2D hitInfo)
         {
+            Enemy enemy = hitInfo.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+
+            var bullet = transform;
+            Instantiate(impactEffect, bullet.position, bullet.rotation);
             Destroy(gameObject);
+        }
+
+        private void Update()
+        {
+            m_timeAlive += Time.deltaTime;
+            Debug.Log("Time alive: "+ m_timeAlive + " - Delta Time: " + Time.deltaTime);
+            if (m_timeAlive >= timeUntilDestroyed)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
