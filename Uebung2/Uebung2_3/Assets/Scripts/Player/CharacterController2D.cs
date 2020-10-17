@@ -21,7 +21,8 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 	private float m_GroundCheckHeight = 1f;
-
+	private float airTime = 0f;
+	
 	public BoxCollider2D boxCollider;
 	
 	[Header("Events")]
@@ -50,11 +51,45 @@ public class CharacterController2D : MonoBehaviour
 		if (OnCrouchEvent == null)
 			OnCrouchEvent = new BoolEvent();
 	}
-
-	private bool m_TempIsGrounded = true;
+	
 	private void FixedUpdate()
 	{
-		m_TempIsGrounded = m_Grounded;
+		CheckAirTime();
+		
+		m_Grounded = IsGrounded();
+		
+		//WHY YOU NO WORK??? WHY ALWAYS TRUE??
+		if (IsLanded())
+		{
+			Debug.Log("Invoked");
+			OnLandEvent.Invoke();
+		}
+
+	}
+
+	private void CheckAirTime()
+	{
+		if (!IsGrounded())
+		{
+			airTime += Time.deltaTime;
+		}
+	}
+
+	private bool IsLanded()
+	{
+		Debug.Log("Airtime: "+ airTime + " - IsGrounded: "+ IsGrounded());
+		Debug.Log(airTime > 0 && IsGrounded());
+		if (airTime > 0 && IsGrounded())
+		{
+			airTime = 0;
+			return true;
+		}
+		return false;
+	}
+
+
+	private bool IsGrounded()
+	{
 		var boxColliderBounds = boxCollider.bounds;
 		RaycastHit2D raycastHit = Physics2D.BoxCast(boxColliderBounds.center, boxColliderBounds.size, 0f,
 			Vector2.down, m_GroundCheckHeight, m_PlatformLayerMask);
@@ -71,16 +106,8 @@ public class CharacterController2D : MonoBehaviour
 		Debug.DrawRay(boxColliderBounds.center + new Vector3(boxColliderBounds.extents.x,0),Vector2.down * (boxColliderBounds.extents.y +m_GroundCheckHeight), rayColor);
 		Debug.DrawRay(boxColliderBounds.center - new Vector3(boxColliderBounds.extents.x,0),Vector2.down * (boxColliderBounds.extents.y +m_GroundCheckHeight), rayColor);
 
-		m_Grounded = raycastHit.collider != null;
-		
-		//WHY YOU NO WORK??? WHY ALWAYS TRUE??
-		if (m_TempIsGrounded == false && m_Grounded)
-		{
-			OnLandEvent.Invoke();
-		}
-
+		return raycastHit.collider != null;
 	}
-
 
 	public void Move(float move, bool crouch, bool jump)
 	{
