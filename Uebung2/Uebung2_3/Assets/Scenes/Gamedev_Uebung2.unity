@@ -3390,6 +3390,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5181148380902413356, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
   m_PrefabInstance: {fileID: 5181148380070779101}
   m_PrefabAsset: {fileID: 0}
+--- !u!61 &1458752759 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5181148380902413353, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+  m_PrefabInstance: {fileID: 5181148380070779101}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1486521857
 GameObject:
   m_ObjectHideFlags: 0
@@ -4154,6 +4159,26 @@ PrefabInstance:
     - target: {fileID: 5181148380902413356, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_Name
       value: HeroKnight
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181148380902413358, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: whatIsGround.m_Bits
+      value: 768
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181148380902413358, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: crouchDisableCollider
+      value: 
+      objectReference: {fileID: 1458752759}
+    - target: {fileID: 5181148380902413358, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: platformLayerMask.m_Bits
+      value: 768
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181148380902413358, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: jumpForce
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181148380902413358, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: airControl
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
