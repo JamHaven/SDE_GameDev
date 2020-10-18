@@ -58,10 +58,8 @@ public class CharacterController2D : MonoBehaviour
 		
 		m_Grounded = IsGrounded();
 		
-		//WHY YOU NO WORK??? WHY ALWAYS TRUE??
 		if (IsLanded())
 		{
-			Debug.Log("Invoked");
 			OnLandEvent.Invoke();
 		}
 
@@ -77,8 +75,6 @@ public class CharacterController2D : MonoBehaviour
 
 	private bool IsLanded()
 	{
-		Debug.Log("Airtime: "+ airTime + " - IsGrounded: "+ IsGrounded());
-		Debug.Log(airTime > 0 && IsGrounded());
 		if (airTime > 0 && IsGrounded())
 		{
 			airTime = 0;
@@ -86,9 +82,9 @@ public class CharacterController2D : MonoBehaviour
 		}
 		return false;
 	}
-
-
-	private bool IsGrounded()
+	
+	
+	public bool IsGrounded()
 	{
 		var boxColliderBounds = boxCollider.bounds;
 		RaycastHit2D raycastHit = Physics2D.BoxCast(boxColliderBounds.center, boxColliderBounds.size, 0f,

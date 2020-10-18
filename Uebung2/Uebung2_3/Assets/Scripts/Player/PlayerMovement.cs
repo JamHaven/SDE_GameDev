@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int IsFalling = Animator.StringToHash("isFalling");
     private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
-    
+
     // Update is called once per frame
     private void Update()
     {
@@ -39,8 +39,9 @@ public class PlayerMovement : MonoBehaviour
             m_crouch = false;
         }
         
-        animator.SetBool(IsFalling, controller.GetRigidbody2D().velocity.y < -0.5);
-        
+        animator.SetBool(IsFalling, (controller.GetRigidbody2D().velocity.y < -0.5) && !controller.IsGrounded());
+        animator.SetBool(IsGrounded, controller.IsGrounded());
+
 
     }
 
