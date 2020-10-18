@@ -1,25 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Parallax : MonoBehaviour
+namespace Background
 {
-    private float length, startpos;
-    public GameObject cam;
-    public float parallaxEffect;
-
-    // Start is called before the first frame update
-    void Start()
+    /**
+     * Controls the Parallax effect for the background objects
+     */
+    public class Parallax : MonoBehaviour
     {
-        startpos = transform.position.x;
-        length = GetComponent<SpriteRenderer>().bounds.size.x;
-    }
+        private float m_Startpos; //Position to start the effect
+        public GameObject cam; //Which camera to apply the effect to
+        public float parallaxEffect; //Where to start the effect
 
-    // Update is called once per frame
-    void Update()
-    {
-        float distance = (cam.transform.position.x * parallaxEffect);
+        // Start is called before the first frame update
+        void Start()
+        {
+            m_Startpos = transform.position.x;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            //Calulation of the parallex effect
+            float distance = (cam.transform.position.x * parallaxEffect);
         
-        transform.position = new Vector3(startpos + distance, transform.position.y, transform.position.z);
+            //Sets the new position to the background and finalises the effect to the screen
+            transform.position = new Vector3(m_Startpos + distance, transform.position.y, transform.position.z);
+        }
     }
 }

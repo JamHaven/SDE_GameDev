@@ -1,60 +1,74 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+namespace Player
 {
-    public CharacterController2D controller;
-    private float m_horizontalMove = 0f;
-    public float runSpeed = 40f;
-    public Animator animator;
-    private bool m_jump = false;
-    private bool m_crouch = false;
-    private static readonly int IsJumping = Animator.StringToHash("isJumping");
-    private static readonly int Speed = Animator.StringToHash("Speed");
-    private static readonly int IsFalling = Animator.StringToHash("isFalling");
-    private static readonly int IsGrounded = Animator.StringToHash("isGrounded");
-
-    // Update is called once per frame
-    private void Update()
+    /**
+     * Controlls the movement of the player and interacts with the controller
+     */
+    public class PlayerMovement : MonoBehaviour
     {
-       m_horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        public CharacterController2D controller; //Which player controller to use
+        public float runSpeed = 40f; // How fast do we move vertically
+        public Animator animator; //Which animator conroller to use
         
+        private float m_horizontalMove = 0f; //How fast do we move left (negative) or right (positive)
+        private bool m_jump = false; //Did we jump?
+        private bool m_crouch = false; // Did we crouch TODO: Not finished yet
         
-        animator.SetFloat(Speed, Mathf.Abs(m_horizontalMove));
-        
-        if (Input.GetButtonDown("Jump"))
+        //Animator parameters
+        private static readonly int IsJumping = Animator.StringToHash("isJumping"); //Are we between jumping and landing
+        private static readonly int Speed = Animator.StringToHash("Speed"); //How fast are we moving on the x axis
+        private static readonly int IsFalling = Animator.StringToHash("isFalling"); //Are we falling?
+        private static readonly int IsGrounded = Animator.StringToHash("isGrounded"); // Are we on the ground
+
+        // Update is called once per frame
+        private void Update()
         {
-            m_jump = true;
-            animator.SetBool(IsJumping, true);
+            m_horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed; //Define if we move left or right with a certain speed
+        
+        
+            animator.SetFloat(Speed, Mathf.Abs(m_horizontalMove)); //Set Speed parameter in animator
+        
+            //If we pressed jump, we move vertically later (see FixedUpdate)
+            if (Input.GetButtonDown("Jump"))
+            {
+                m_jump = true;
+                animator.SetBool(IsJumping, true); //Tell the animator we are currently jumping
+            }
+            
+            //We are crouched as long as we hold the Crouch button
+            if (Input.GetButtonDown("Crouch"))
+            {
+                m_crouch = true;
+            }
+            else if (Input.GetButtonUp("Crouch"))
+            {
+                m_crouch = false;
+            }
+        
+            //Check if we are falling and are on the ground
+            animator.SetBool(IsFalling, (controller.GetRigidbody2D().velocity.y < -0.5) && !controller.IsGrounded());
+            animator.SetBool(IsGrounded, controller.IsGrounded());
+
+
         }
 
-        if (Input.GetButtonDown("Crouch"))
+        /**
+         * This is called from the controller via event and sets the parameters in the animator controller.
+         * Triggered when landing after falling or jumping
+         */
+        public void OnLanding()
         {
-            m_crouch = true;
+            animator.SetBool(IsJumping, false);
+            animator.SetBool(IsFalling, false);
         }
-        else if (Input.GetButtonUp("Crouch"))
-        {
-            m_crouch = false;
-        }
-        
-        animator.SetBool(IsFalling, (controller.GetRigidbody2D().velocity.y < -0.5) && !controller.IsGrounded());
-        animator.SetBool(IsGrounded, controller.IsGrounded());
-
-
-    }
-
-    public void OnLanding()
-    {
-        animator.SetBool(IsJumping, false);
-        animator.SetBool(IsFalling, false);
-    }
     
-    private void FixedUpdate()
-    {
-        controller.Move(m_horizontalMove * Time.fixedDeltaTime, m_crouch, m_jump);
-        m_jump = false;
-    }
+        //Handles physics movement and is frame independed
+        private void FixedUpdate()
+        {
+            controller.Move(m_horizontalMove * Time.fixedDeltaTime, m_crouch, m_jump);
+            m_jump = false;
+        }
     
+    }
 }

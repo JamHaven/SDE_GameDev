@@ -1,55 +1,63 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Weapon : MonoBehaviour
+namespace Player
 {
-    public Transform firePoint;
-    public GameObject bulletPrefab;
-    private float m_timeSinceAttack = 0.0f;
-    private int   m_currentAttack = 0;
-    private Animator m_animator;
-    
-    
-    private void Start()
+    /**
+ * Handles weapon behaviour
+     * We currently have a Shooting sword (Gunblade or like Zelda)
+ * TODO: different kind of weapons
+ */
+    public class Weapon : MonoBehaviour
     {
-        m_animator = GetComponent<Animator>();
-    }
-
+        public Transform firePoint; // Where to spawn the bullet at
+        public GameObject bulletPrefab; // Which bullet to use
+        private float m_timeSinceAttack = 0.0f; //Tracks time since we last attacked for animation purposes and attack speed
+        private int   m_currentAttack = 0; // Which attack animation are we at
+        private Animator m_animator; //Which animator controller to use
     
-    // Update is called once per frame
-    void Update()
-    {
-        
-        // Increase timer that controls attack combo
-        m_timeSinceAttack += Time.deltaTime;
-
-        //Sword attack and Sword LASER
-        if (Input.GetButtonDown("Fire1") && m_timeSinceAttack > 0.25f)
+    
+        private void Start()
         {
-            m_currentAttack++;
-
-            // Loop back to one after third attack
-            if (m_currentAttack > 3)
-                m_currentAttack = 1;
-
-            // Reset Attack combo if time since last attack is too large
-            if (m_timeSinceAttack > 1.0f)
-                m_currentAttack = 1;
-
-            // Call one of three attack animations "Attack1", "Attack2", "Attack3"
-            m_animator.SetTrigger("Attack" + m_currentAttack);
-
-            // Reset timer
-            m_timeSinceAttack = 0.0f;
-
-            Shoot();
+            m_animator = GetComponent<Animator>();
         }
-    }
 
-    void Shoot()
-    {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+    
+        // Update is called once per frame
+        void Update()
+        {
+        
+            // Increase timer that controls attack combo
+            m_timeSinceAttack += Time.deltaTime;
+
+            //Sword attack and Sword LASER
+            if (Input.GetButtonDown("Fire1") && m_timeSinceAttack > 0.25f)
+            {
+                m_currentAttack++;
+
+                // Loop back to one after third attack
+                if (m_currentAttack > 3)
+                    m_currentAttack = 1;
+
+                // Reset Attack combo if time since last attack is too large
+                if (m_timeSinceAttack > 1.0f)
+                    m_currentAttack = 1;
+
+                // Call one of three attack animations "Attack1", "Attack2", "Attack3"
+                m_animator.SetTrigger("Attack" + m_currentAttack);
+
+                // Reset timer
+                m_timeSinceAttack = 0.0f;
+
+                Shoot(); //Shoot a energy bullet 
+            }
+        }
+
+        /**
+         * Shoots an energy bullet
+         */
+        void Shoot()
+        {
+            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        }
     }
 }

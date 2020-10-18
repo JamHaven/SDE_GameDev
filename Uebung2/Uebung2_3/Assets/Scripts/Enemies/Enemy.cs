@@ -1,28 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Enemy : MonoBehaviour
+namespace Enemies
 {
-    public int health = 100;
-
-    public GameObject deathEffect;
-
-    public void TakeDamage(int damage)
+    public class Enemy : MonoBehaviour
     {
-        health -= damage;
+        public int health = 100; //Health until death
 
-        if (health <= 0)
+        public GameObject deathEffect;
+
+        /**
+         * Called by the object that hits this game object.
+         * Makes the game object loose health
+         */
+        public void TakeDamage(int damage)
         {
-            Die();
-        }
-    }
+            health -= damage;
 
-    void Die()
-    {
-        var deathEffectInstance = Instantiate(deathEffect, transform.position, Quaternion.identity);
-        Destroy(deathEffectInstance,1.5f);
-        Destroy(gameObject);
+            if (health <= 0)
+            {
+                Die(); //if no HP left --> Die
+            }
+        }
+
+        /**
+         * Called when HP reach zero to remove game object
+         */
+        void Die()
+        {
+            //plays animation and destroys it after some time
+            var deathEffectInstance = Instantiate(deathEffect, transform.position, Quaternion.identity);
+            Destroy(deathEffectInstance,1.5f);
+            Destroy(gameObject); //removes game object (killed)
+        }
     }
 }
