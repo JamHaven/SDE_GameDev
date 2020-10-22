@@ -3613,6 +3613,7 @@ GameObject:
   - component: {fileID: 1532652607}
   - component: {fileID: 1532652610}
   - component: {fileID: 1532652611}
+  - component: {fileID: 1532652612}
   m_Layer: 9
   m_Name: CrabEnemy
   m_TagString: Untagged
@@ -3642,7 +3643,7 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 0.28, y: 0.28}
   m_EdgeRadius: 0
@@ -3758,8 +3759,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementType: 0
   pathToFollow: {fileID: 983566929}
-  speed: 1
+  speed: 2
   maxDistanceToGoal: 0.1
+  animator: {fileID: 1532652610}
+--- !u!114 &1532652612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532652605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d0a7165768193a4a848a7bf8f2b8575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doesDamageOnTouch: 0
+  damage: 20
 --- !u!1 &1611642782
 GameObject:
   m_ObjectHideFlags: 0

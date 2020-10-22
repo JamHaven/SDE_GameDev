@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,10 +26,12 @@ public class PlayerHealth : MonoBehaviour
         }   
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         
         healthBar.SetHealth(currentHealth);
+        
+        Debug.Log("Player took:" + damage + " damage.");
     }
 }
