@@ -21,7 +21,6 @@ namespace Items
     
         private void OnTriggerEnter2D(Collider2D colliderObject)
         {
-            Debug.Log("Triggered");
             PlayerHealth playerHealth = colliderObject.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {

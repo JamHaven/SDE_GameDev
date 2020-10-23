@@ -7,13 +7,13 @@ namespace Enemies
     public class Enemy : MonoBehaviour
     {
         public int health = 100; //Health until death
-        public PointSystem pointController;
+        private PointSystem pointController;
         public int pointValue = 1;
         public GameObject deathEffect;
 
         public void Start()
         {
-            
+            pointController = GameObject.FindGameObjectWithTag("PointSystem").GetComponentInChildren<PointSystem>();
         }
         
 

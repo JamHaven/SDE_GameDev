@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -13,7 +14,6 @@ namespace Player
         
         private float m_horizontalMove = 0f; //How fast do we move left (negative) or right (positive)
         private bool m_jump = false; //Did we jump?
-        private bool m_crouch = false; // Did we crouch TODO: Not finished yet
         
         //Animator parameters
         private static readonly int IsJumping = Animator.StringToHash("isJumping"); //Are we between jumping and landing
@@ -24,7 +24,7 @@ namespace Player
         // Update is called once per frame
         private void Update()
         {
-            if(!controller.GetIsDead()){
+            if(!controller.GetIsDead() && !controller.IsGameWon()){
                 m_horizontalMove =
                     Input.GetAxisRaw("Horizontal") * runSpeed; //Define if we move left or right with a certain speed
 
@@ -38,21 +38,15 @@ namespace Player
                     animator.SetBool(IsJumping, true); //Tell the animator we are currently jumping
                 }
 
-                //We are crouched as long as we hold the Crouch button
-                if (Input.GetButtonDown("Crouch"))
-                {
-                    m_crouch = true;
-                }
-                else if (Input.GetButtonUp("Crouch"))
-                {
-                    m_crouch = false;
-                }
-
                 //Check if we are falling and are on the ground
                 animator.SetBool(IsFalling,
                     (controller.GetRigidbody2D().velocity.y < -0.5) && !controller.IsGrounded());
                 animator.SetBool(IsGrounded, controller.IsGrounded());
 
+            } else if(Input.GetKeyDown(KeyCode.R))
+            {
+                //Time.timeScale = 1;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
 
@@ -73,7 +67,7 @@ namespace Player
         {
             if (!controller.GetIsDead())
             {
-                controller.Move(m_horizontalMove * Time.fixedDeltaTime, m_crouch, m_jump);
+                controller.Move(m_horizontalMove * Time.fixedDeltaTime, m_jump);
                 m_jump = false;
             }
         }

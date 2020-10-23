@@ -8,29 +8,33 @@ public class EnemyDamage : MonoBehaviour
 {
 
     public bool doesDamageOnTouch;
-    public int damage;
+    public int damage = 20;
+    public BoxCollider2D enemyBoxCollider;
+    
+    private BoxCollider2D m_playerBoxCollider;
+    private PlayerHealth m_playerHealth;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_playerHealth = GameObject.Find("HeroKnight").GetComponent<PlayerHealth>();
+        m_playerBoxCollider = GameObject.Find("HeroKnight").GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
+        if (enemyBoxCollider.bounds.Intersects(m_playerBoxCollider.bounds))
+        {
+            InflictDamage();
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collisionObject)
+    private void InflictDamage()
     {
-        if (collisionObject.gameObject.CompareTag("Player"))
+        if (m_playerHealth != null)
         {
-            PlayerHealth playerHealth = collisionObject.gameObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(damage);
-            }
+            m_playerHealth.TakeDamage(damage);
         }
     }
 }
