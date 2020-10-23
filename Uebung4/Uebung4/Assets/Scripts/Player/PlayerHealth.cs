@@ -32,11 +32,6 @@ namespace Player
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                TakeDamage(20);
-            }
-            
             //Invulnerability Timer count
             m_timeSinceLastGotHit += Time.deltaTime;
         }

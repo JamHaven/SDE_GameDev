@@ -6,9 +6,7 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
-
-    public bool doesDamageOnTouch;
-    public int damage = 20;
+    public int damage = 20; //How much damage does the enemy invoke
     public BoxCollider2D enemyBoxCollider;
     
     private BoxCollider2D m_playerBoxCollider;
@@ -24,12 +22,16 @@ public class EnemyDamage : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //If the gameobejcts box collider and the players collider overlap (since there is no collision), inflict damage to the player
         if (enemyBoxCollider.bounds.Intersects(m_playerBoxCollider.bounds))
         {
             InflictDamage();
         }
     }
 
+    /**
+     * Inflicts damage to the player
+     */
     private void InflictDamage()
     {
         if (m_playerHealth != null)

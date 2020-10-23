@@ -893,7 +893,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointDisplay: {fileID: 680004310}
   startingPoints: 0
-  pointsToWin: 3
+  pointsToWin: 7
   centerTextBox: {fileID: 684281511}
 --- !u!114 &680004310
 MonoBehaviour:
