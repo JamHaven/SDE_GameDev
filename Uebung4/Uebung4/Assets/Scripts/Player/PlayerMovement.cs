@@ -36,6 +36,9 @@ namespace Player
                 {
                     m_jump = true;
                     animator.SetBool(IsJumping, true); //Tell the animator we are currently jumping
+                }else if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    Application.Quit();
                 }
 
                 //Check if we are falling and are on the ground
