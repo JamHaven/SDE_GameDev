@@ -12,7 +12,7 @@ namespace Player
 		[SerializeField] private bool airControl = false;							// Whether or not a player can steer while jumping;
 		[SerializeField] private Transform ceilingCheck;							// A position marking where to check for ceilings
 		[SerializeField] private Collider2D crouchDisableCollider;				// A collider that will be disabled when crouching
-		[SerializeField] private LayerMask platformLayerMask; 					// Which object layers do we detect as Ground
+		[SerializeField] public LayerMask platformLayerMask; 					// Which object layers do we detect as Ground
 	
 		private bool m_Grounded = true;            // Whether or not the player is grounded.
 		const float KCeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up

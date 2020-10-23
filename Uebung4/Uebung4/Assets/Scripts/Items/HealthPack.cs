@@ -6,7 +6,7 @@ namespace Items
     public class HealthPack : MonoBehaviour
     {
         public int healPower = 40;
-    
+
         // Start is called before the first frame update
         void Start()
         {
@@ -25,8 +25,11 @@ namespace Items
             PlayerHealth playerHealth = colliderObject.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.Heal(healPower);
-                Destroy(gameObject);
+                if (!playerHealth.IsFullHealth())
+                {
+                    playerHealth.Heal(healPower);
+                    Destroy(gameObject);
+                }
             }
         }
     }

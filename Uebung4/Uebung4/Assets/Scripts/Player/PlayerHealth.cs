@@ -84,13 +84,30 @@ namespace Player
             controller.SetIsDead(true);
         }
 
+        /**
+         * Heals the player with "health" amount of HP.
+         * Object cannot be healed higher than maxhealth.
+         */
         public void Heal(int health)
         {
-            if (currentHealth + health <= maxHealth)
+            if (currentHealth + health > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+            else
             {
                 currentHealth += health;
             }
-        }
+            healthBar.SetHealth(currentHealth);
         
+        }
+
+        /**
+         * Public query if the player is at maxhealth. For Health items.
+         */
+        public bool IsFullHealth()
+        {
+            return currentHealth == maxHealth;
+        }
     }
 }

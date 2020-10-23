@@ -20,7 +20,7 @@ namespace Pathing
         public MovementType movementType = MovementType.MoveTowards; //Default movement type
         public MovementPath pathToFollow; //Spline to move along
         public float speed = 1; //Movement speed
-        private static readonly int AnimatorSpeed = Animator.StringToHash("Speed");
+        private static readonly int Speed = Animator.StringToHash("Speed");
         public float maxDistanceToGoal = .1f; //How close the obejct has to get to move to the next spline point
         public Animator animator;
         private Vector3 m_PrevLoc = Vector3.zero;
@@ -80,7 +80,7 @@ namespace Pathing
                 
             }
             //Feed the animator with the movement speed to trigger the walk animation
-            animator.SetFloat(AnimatorSpeed, Mathf.Abs(currentSpeed));
+            //animator.SetFloat(Speed, Mathf.Abs(currentSpeed));
 
  
 
